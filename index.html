@@ -110,13 +110,21 @@ h2{
 
 /* ---- Activités ---- */
 .act{
-  display:flex;align-items:center;gap:11px;background:#FFFDF8;
+  display:flex;align-items:center;gap:11px;flex-wrap:wrap;background:#FFFDF8;
   border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin-bottom:7px;
 }
 .act .emo{font-size:1.25rem;flex:none;line-height:1}
-.act .txt{flex:1;min-width:0}
+.act .txt{flex:1;min-width:7rem}
 .act .nm{font-weight:600;font-size:0.95rem}
 .act .du{font-size:0.8rem;color:var(--muted)}
+.act-btns{display:flex;gap:6px;align-items:center;margin-left:auto}
+.act .mv{
+  width:34px;height:34px;padding:0;line-height:1;flex:none;
+  font:inherit;font-size:0.95rem;background:transparent;
+  border:1px solid var(--line);border-radius:8px;color:var(--muted);cursor:pointer;
+}
+.act .mv:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
+.act .mv:disabled{opacity:0.28;cursor:default}
 .act .edit{
   font:inherit;font-size:0.78rem;background:transparent;border:1px solid var(--line);
   border-radius:20px;padding:5px 12px;color:var(--muted);cursor:pointer;flex:none;
@@ -511,7 +519,7 @@ function renderActs(){
     return;
   }
 
-  activites.forEach(function(A){
+  activites.forEach(function(A, i){
     var row = el('div','act');
     var emo = el('div','emo'); emo.textContent = A.emo || '•'; row.appendChild(emo);
 
@@ -520,13 +528,41 @@ function renderActs(){
     var du = el('div','du'); du.textContent = duree(A.min);
     txt.appendChild(nm); txt.appendChild(du); row.appendChild(txt);
 
+    var btns = el('div','act-btns');
+
+    var up = el('button','mv');
+    up.textContent = '↑';
+    up.disabled = (i === 0);
+    up.setAttribute('aria-label','Monter ' + A.nom);
+    up.addEventListener('click', function(){ bouger(i, -1); });
+    btns.appendChild(up);
+
+    var dn = el('button','mv');
+    dn.textContent = '↓';
+    dn.disabled = (i === activites.length - 1);
+    dn.setAttribute('aria-label','Descendre ' + A.nom);
+    dn.addEventListener('click', function(){ bouger(i, 1); });
+    btns.appendChild(dn);
+
     var b = el('button','edit');
     b.textContent = 'Modifier';
     b.addEventListener('click', function(){ openAct(A.id); });
-    row.appendChild(b);
+    btns.appendChild(b);
 
+    row.appendChild(btns);
     box.appendChild(row);
   });
+}
+
+// L'ordre choisi ici sert aussi de haut en bas dans la feuille d'ajout.
+function bouger(i, d){
+  var j = i + d;
+  if(j < 0 || j >= activites.length) return;
+  var tmp = activites[i];
+  activites[i] = activites[j];
+  activites[j] = tmp;
+  saveAll();
+  renderActs();
 }
 
 /* ---------- feuille : créneau ---------- */

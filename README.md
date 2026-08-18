@@ -73,6 +73,15 @@ amplitude de 45 minutes où le bloc occuperait tout et ne dirait plus rien.
 L'axe horaire passe au pas de deux heures dès que l'amplitude dépasse six heures,
 sinon les libellés se chevauchent.
 
+## Ordre des activités
+
+Rangement manuel, par deux flèches dans « Mes activités ». Cet ordre est celui de la
+feuille d'ajout, où l'on passe le plus de temps.
+
+Pas de tri automatique par fréquence : la liste bougerait sous le doigt, et
+l'instabilité coûterait plus que le gain. Pas de tri alphabétique non plus, stable
+mais arbitraire. L'ordre appartient à qui se sert de l'appli, et se règle une fois.
+
 ## Suppression d'une activité
 
 Refusée tant que des créneaux de la semaine l'utilisent, avec un message qui
@@ -94,7 +103,8 @@ sousreserve.derniereheure  entier, minutes depuis minuit
 ```
 
 `date` en `AAAA-MM-JJ`, `deb` en minutes depuis minuit, `type` renvoie à l'`id`
-d'une activité. Le préfixe compte : toutes les apps de `azertida.github.io`
+d'une activité. L'ordre du tableau `activites` est l'ordre d'affichage, il n'est
+jamais retrié. Le préfixe compte : toutes les apps de `azertida.github.io`
 partagent la même origine et le même quota.
 
 **Reprise depuis Cours d'eau.** Au premier lancement, si aucune donnée n'existe et
