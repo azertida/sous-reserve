@@ -107,11 +107,9 @@ d'une activité. L'ordre du tableau `activites` est l'ordre d'affichage, il n'es
 jamais retrié. Le préfixe compte : toutes les apps de `azertida.github.io`
 partagent la même origine et le même quota.
 
-**Reprise depuis Cours d'eau.** Au premier lancement, si aucune donnée n'existe et
-que la clé `coursdeau.items` est présente sur la même origine, les créneaux sont
-importés et les trois activités d'origine (Aquafit, Aquajump, Perfectionnement)
-recréées. Ce code est en une seule fonction, `reprise()`, et peut être retiré une
-fois la migration faite.
+Pas d'export ni d'import, délibérément : la semaine s'efface d'elle-même, il n'y a
+rien qui mérite d'être sauvegardé. Seule la liste des activités est durable, et elle
+se recrée en quelques appuis.
 
 ## PWA
 

@@ -255,7 +255,6 @@ footer{margin-top:30px;font-size:0.74rem;color:var(--muted);line-height:1.6}
 var K_ACT = 'sousreserve.activites';
 var K_ITM = 'sousreserve.items';
 var K_HR  = 'sousreserve.derniereheure';
-var K_OLD = 'coursdeau.items';          // reprise des données de Cours d'eau
 
 var JOURS = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
 var MOIS  = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
@@ -316,29 +315,7 @@ function load(){
     if(h >= DAY_START && h <= DAY_END) derniereHeure = h;
   }catch(e){ activites = []; items = []; }
 
-  reprise();
   purge();
-}
-
-// Première ouverture : on récupère ce qui avait été saisi dans Cours d'eau.
-function reprise(){
-  if(activites.length || items.length) return;
-  var brut;
-  try{ brut = localStorage.getItem(K_OLD); }catch(e){ return; }
-  if(!brut) return;
-  var anciens;
-  try{ anciens = JSON.parse(brut); }catch(e){ return; }
-  if(!Array.isArray(anciens) || !anciens.length) return;
-
-  activites = [
-    { id:'aquafit',  nom:'Aquafit',          emo:'🏊', min:45 },
-    { id:'aquajump', nom:'Aquajump',         emo:'🤸', min:45 },
-    { id:'perf',     nom:'Perfectionnement', emo:'🎯', min:60 }
-  ];
-  items = anciens.map(function(o){
-    return { id:o.id, date:o.date, type:o.type, deb:o.deb, statut:o.statut };
-  });
-  saveAll();
 }
 
 function saveAll(){
